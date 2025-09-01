@@ -1,29 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CalendarClock, Workflow, Wrench, Rocket } from "lucide-react"
+import { CalendarClock, Workflow, Wrench, Rocket, type LucideIcon } from "lucide-react"
 
-const steps = [
-  {
-    icon: CalendarClock,
-    title: "Kick-off (45 Min)",
-    text: "Wir schärfen Ziel, Datenquellen & Erfolgskriterien. Danach bekommst du einen schlanken Plan (MVP).",
-  },
-  {
-    icon: Workflow,
-    title: "Blueprint & Prototyp",
-    text: "Wir definieren die Schritte (Eingang → Regeln → Aktionen) und zeigen einen klickbaren Prototyp.",
-  },
-  {
-    icon: Wrench,
-    title: "Build (1–2 Wochen)",
-    text: "Wir bauen die Automationen, Tests & Logging – eng im Austausch, damit alles wirklich passt.",
-  },
-  {
-    icon: Rocket,
-    title: "Go-Live & Hand-off",
-    text: "Übergabe, Doku, Training. Optional Wartung/Erweiterung. Fokus: messbar Zeit sparen.",
-  },
+type Step = { icon: LucideIcon; title: string; text: string }
+
+const steps: Step[] = [
+  { icon: CalendarClock, title: "Kick-off (45 Min)", text: "Ziel, Datenquellen & Erfolgskriterien schärfen. Du erhältst einen kompakten MVP-Plan." },
+  { icon: Workflow, title: "Blueprint & Prototyp", text: "Eingang → Regeln → Aktionen. Klickbarer Prototyp macht den Ablauf sofort greifbar." },
+  { icon: Wrench, title: "Build (1–2 Wochen)", text: "Automationen, Tests & Logging – eng im Austausch, damit es wirklich zu eurem Prozess passt." },
+  { icon: Rocket, title: "Go-Live & Hand-off", text: "Übergabe, Doku, Training. Optional Wartung/Erweiterung. Fokus: messbar Zeit sparen." },
 ]
 
 export default function Process() {
@@ -47,7 +33,7 @@ export default function Process() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.35, delay: i * 0.05 }}
-            className="rounded-2xl border bg-card/60 p-5 shadow hover-glow"
+            className="rounded-2xl border bg-card/60 p-5 shadow"
           >
             <div className="flex items-center gap-3">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient">
@@ -55,7 +41,6 @@ export default function Process() {
               </span>
               <div className="text-lg font-semibold">{title}</div>
             </div>
-
             <p className="mt-3 text-sm text-muted-foreground">{text}</p>
           </motion.div>
         ))}

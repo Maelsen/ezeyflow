@@ -1,35 +1,42 @@
-import "./globals.css"
 import type { Metadata } from "next"
-import { Inter, Sora } from "next/font/google"
-import Header from "@/components/layout/Header"
+import { Geist, Geist_Mono } from "geist/font" // stellt --font-geist-sans / --font-geist-mono bereit
+import "./globals.css"
+
+import dynamic from "next/dynamic"
+
+// Client-only Komponenten NICHT server-rendern (verhindert useContext-Fehler beim Prerender)
+const Header = dynamic(() => import("@/components/layout/Header"), { ssr: false })
+const CtaRibbon = dynamic(() => import("@/components/layout/CtaRibbon"), { ssr: false })
+const ScrollTop = dynamic(() => import("@/components/layout/ScrollTop"), { ssr: false })
+
+// Footer ist rein präsentational (kein Hook) – kann serverseitig bleiben
 import Footer from "@/components/layout/Footer"
+
+// Optionales SEO-Default (falls vorhanden)
 import DefaultSEO from "@/components/seo/DefaultSEO"
-import CtaRibbon from "@/components/layout/CtaRibbon"
-import ScrollTop from "@/components/layout/ScrollTop"
-
-
-
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" })
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" })
 
 export const metadata: Metadata = {
-  title: "ezeyflow – Automatisierungen & Dashboards",
-  description: "KI-gestützte Workflows, die Teams hunderte Stunden sparen.",
-  metadataBase: new URL("https://ezeyflow.com"),
+  title: "ezeyflow – KI-gestützte Automatisierungen & Dashboards",
+  description:
+    "Wir bauen KI-Automatisierungen, Dashboards & Integrationen, die Teams hunderte Stunden sparen – benutzerfreundlich und in 1–2 Wochen live.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className="dark">
       <head>
+        {/* kleine Performance-Hints */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
-      <body className={`${inter.variable} ${sora.variable} antialiased`}>
-        <DefaultSEO />
+      <body className={`${Geist.variable} ${Geist_Mono.variable} antialiased`}>
+        {/* SEO-Defaults, falls die Komponente existiert */}
+        {typeof DefaultSEO !== "undefined" && <DefaultSEO />}
+
         <Header />
         <CtaRibbon />
+
         {children}
+
         <ScrollTop />
         <Footer />
       </body>

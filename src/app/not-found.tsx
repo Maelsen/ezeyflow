@@ -1,13 +1,15 @@
-"use client"
-
-import Link from "next/link"
+export const metadata = { title: "Seite nicht gefunden – ezeyflow" }
 
 export default function NotFound() {
   return (
-    <main className="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center gap-4 px-6 text-center">
-      <h1 className="text-4xl font-extrabold text-brand-gradient">Seite nicht gefunden</h1>
-      <p className="text-muted-foreground">Die angeforderte Seite existiert nicht oder wurde verschoben.</p>
-      <Link href="/" className="underline underline-offset-4 decoration-primary/50">Zur Startseite</Link>
+    <main className="mx-auto max-w-3xl px-6 py-24">
+      <h1 className="text-3xl font-bold">Seite nicht gefunden</h1>
+      <p className="mt-2 text-muted-foreground">
+        Die Seite existiert nicht oder wurde verschoben.
+      </p>
+      <a href="/" className="mt-6 inline-block rounded-xl border bg-card/60 px-4 py-2">
+        Zur Startseite
+      </a>
     </main>
   )
 }
