@@ -1,18 +1,21 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "geist/font" // stellt --font-geist-sans / --font-geist-mono bereit
 import "./globals.css"
 
 import dynamic from "next/dynamic"
+import { Inter, Roboto_Mono } from "next/font/google"
 
-// Client-only Komponenten NICHT server-rendern (verhindert useContext-Fehler beim Prerender)
+// Wir behalten deine Variablennamen, damit globals.css/Tailwind passt
+const Geist = Inter({ subsets: ["latin"], variable: "--font-geist-sans" })
+const Geist_Mono = Roboto_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
+
+// Client-only Komponenten nicht server-rendern (fix für _not-found/useContext)
 const Header = dynamic(() => import("@/components/layout/Header"), { ssr: false })
 const CtaRibbon = dynamic(() => import("@/components/layout/CtaRibbon"), { ssr: false })
 const ScrollTop = dynamic(() => import("@/components/layout/ScrollTop"), { ssr: false })
 
-// Footer ist rein präsentational (kein Hook) – kann serverseitig bleiben
 import Footer from "@/components/layout/Footer"
 
-// Optionales SEO-Default (falls vorhanden)
+// Falls noch nicht vorhanden, leg eine leere Komponente an: src/components/seo/DefaultSEO.tsx (export default () => null)
 import DefaultSEO from "@/components/seo/DefaultSEO"
 
 export const metadata: Metadata = {
@@ -25,18 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de" className="dark">
       <head>
-        {/* kleine Performance-Hints */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
       <body className={`${Geist.variable} ${Geist_Mono.variable} antialiased`}>
-        {/* SEO-Defaults, falls die Komponente existiert */}
-        {typeof DefaultSEO !== "undefined" && <DefaultSEO />}
-
+        <DefaultSEO />
         <Header />
         <CtaRibbon />
-
         {children}
-
         <ScrollTop />
         <Footer />
       </body>
