@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-
 "use client"
-
 
 import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
@@ -30,7 +27,6 @@ export default function CodeToUi() {
   const [phase, setPhase] = useState<Phase>("code")
   const [lines, setLines] = useState<string[]>([])
 
- 
   useEffect(() => {
     if (phase !== "code") return
     let i = 0
@@ -38,7 +34,7 @@ export default function CodeToUi() {
       setLines((prev) => (i < SOURCE.length ? [...prev, SOURCE[i++]] : prev))
       if (i >= SOURCE.length) {
         clearInterval(id)
-        setTimeout(() => setPhase("morph"), 600) 
+        setTimeout(() => setPhase("morph"), 600)
         setTimeout(() => setPhase("ui"), 1400)
       }
     }, 90)
@@ -49,16 +45,12 @@ export default function CodeToUi() {
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {/* Linke Fläche: Code → Morph */}
-      <div className="relative rounded-2xl border bg-card/40 p-0 overflow-hidden">
-        {/* Soft-fade Ränder via CSS mask */}
+      <div className="relative overflow-hidden rounded-2xl border bg-card/40 p-0">
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0"
           style={{
-            WebkitMaskImage:
-              "radial-gradient(120% 120% at 50% 20%, black 60%, transparent 100%)",
-            maskImage:
-              "radial-gradient(120% 120% at 50% 20%, black 60%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(120% 120% at 50% 20%, black 60%, transparent 100%)",
+            maskImage: "radial-gradient(120% 120% at 50% 20%, black 60%, transparent 100%)",
           }}
         />
         <motion.pre
@@ -68,10 +60,8 @@ export default function CodeToUi() {
           className="m-0 max-h-64 overflow-hidden p-4 text-xs leading-relaxed md:max-h-72 md:text-sm"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-{codeText}
+          {codeText}
         </motion.pre>
-
-        {/* Morph-Overlay */}
         {phase !== "code" && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -82,7 +72,6 @@ export default function CodeToUi() {
         )}
       </div>
 
-      {/* Rechte Fläche: resultierende UI */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: phase === "ui" ? 1 : 0, y: phase === "ui" ? 0 : 8 }}
@@ -109,7 +98,6 @@ export default function CodeToUi() {
           </div>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          {/* Erklärung bewusst kurz gehalten */}
           Komplexer Code wird zu einer klaren UI – Teams arbeiten im Flow.
         </p>
       </motion.div>
