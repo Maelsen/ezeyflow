@@ -1,4 +1,7 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
+
 "use client"
+
 
 import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
@@ -27,7 +30,7 @@ export default function CodeToUi() {
   const [phase, setPhase] = useState<Phase>("code")
   const [lines, setLines] = useState<string[]>([])
 
-  // Code rattern lassen
+ 
   useEffect(() => {
     if (phase !== "code") return
     let i = 0
@@ -35,7 +38,7 @@ export default function CodeToUi() {
       setLines((prev) => (i < SOURCE.length ? [...prev, SOURCE[i++]] : prev))
       if (i >= SOURCE.length) {
         clearInterval(id)
-        setTimeout(() => setPhase("morph"), 600) // kurzer Atemzug
+        setTimeout(() => setPhase("morph"), 600) 
         setTimeout(() => setPhase("ui"), 1400)
       }
     }, 90)
