@@ -50,9 +50,12 @@ export default function Process() {
             className="rounded-2xl border bg-card/60 p-5 shadow hover-glow"
           >
             <div className="flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient" />
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient">
+                <Icon className="h-5 w-5 text-background" />
+              </span>
               <div className="text-lg font-semibold">{title}</div>
             </div>
+
             <p className="mt-3 text-sm text-muted-foreground">{text}</p>
           </motion.div>
         ))}
