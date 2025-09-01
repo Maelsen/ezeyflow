@@ -1,21 +1,19 @@
 import type { Metadata } from "next"
 import "./globals.css"
 
-import dynamic from "next/dynamic"
 import { Inter, Roboto_Mono } from "next/font/google"
 
-// Wir behalten deine Variablennamen, damit globals.css/Tailwind passt
+// Fonts als CSS-Variablen, passend zu deiner globals.css
 const Geist = Inter({ subsets: ["latin"], variable: "--font-geist-sans" })
 const Geist_Mono = Roboto_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
-// Client-only Komponenten nicht server-rendern (fix für _not-found/useContext)
-const Header = dynamic(() => import("@/components/layout/Header"), { ssr: false })
-const CtaRibbon = dynamic(() => import("@/components/layout/CtaRibbon"), { ssr: false })
-const ScrollTop = dynamic(() => import("@/components/layout/ScrollTop"), { ssr: false })
-
+// Client-Komponenten NORMAL importieren – Next setzt automatisch Client-Boundaries
+import Header from "@/components/layout/Header"
+import CtaRibbon from "@/components/layout/CtaRibbon"
+import ScrollTop from "@/components/layout/ScrollTop"
 import Footer from "@/components/layout/Footer"
 
-// Falls noch nicht vorhanden, leg eine leere Komponente an: src/components/seo/DefaultSEO.tsx (export default () => null)
+// Falls noch nicht vorhanden, lege src/components/seo/DefaultSEO.tsx mit "export default () => null" an
 import DefaultSEO from "@/components/seo/DefaultSEO"
 
 export const metadata: Metadata = {
