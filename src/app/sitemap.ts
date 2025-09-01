@@ -1,0 +1,10 @@
+import type { MetadataRoute } from "next"
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = "https://ezeyflow.com"
+  return [
+    { url: `${base}/`, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/impressum`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/datenschutz`, changeFrequency: "yearly", priority: 0.3 },
+  ]
+}

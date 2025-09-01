@@ -2,6 +2,15 @@ import { Button } from "@/components/ui/button"
 import CodeToUi from "@/components/hero/CodeToUi"
 import ValueProp from "@/components/sections/ValueProp"
 import Portfolio from "@/components/sections/Portfolio"
+import AutomationLab from "@/components/sections/AutomationLab"
+import Funnel from "@/components/sections/Funnel"
+import HeroBackdrop from "@/components/hero/HeroBackdrop"
+import About from "@/components/sections/About"
+import TrustStrip from "@/components/sections/TrustStrip"
+import StatsStrip from "@/components/sections/StatsStrip"
+
+
+
 
 
 export default function Home() {
@@ -10,14 +19,8 @@ export default function Home() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         {/* dezenter Gradient-Glow im Hintergrund */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(60% 60% at 20% 10%, hsla(var(--brand-start)/0.20), transparent 60%), radial-gradient(50% 50% at 80% 10%, hsla(var(--brand-end)/0.16), transparent 60%)",
-          }}
-        />
+        <HeroBackdrop />
+
 
         <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-36">
           <div className="max-w-3xl">
@@ -76,7 +79,13 @@ export default function Home() {
       </section>
 
       <ValueProp />
+      <AutomationLab />
       <Portfolio />
+      <StatsStrip />
+      <About />
+      <TrustStrip />
+      <Funnel />
+
       <section id="funnel" className="mx-auto max-w-7xl px-6 py-24">
         <h2 className="text-2xl font-bold">Erstgespräch (bald)</h2>
       </section>

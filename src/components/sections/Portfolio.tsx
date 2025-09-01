@@ -16,46 +16,44 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "certs",
+    id: "lead-meeting",
     tag: "Automation",
-    title: "Automatisierte Zertifikate",
-    result: "−20 h/Monat Support",
+    title: "Lead → Meeting (End-to-End)",
+    result: "Reaktionszeit ↓ 80%",
     summary:
-      "Erstellt & versendet Zertifikate automatisch nach Events/Käufen – inkl. KPIs im Template.",
-    media: "/portfolio/cert-automation.gif",
-    bullets: ["Vorlagen-Renderer", "E-Mail-Versand", "Günstiger Serverbetrieb"],
+      "Leads automatisch qualifizieren, E-Mail + Kalendereinladung erzeugen und ins CRM übernehmen.",
+    bullets: ["Antwortzeit von Tagen auf Minuten", "No-Shows ↓ durch klare Terminabfolge", "Kein Copy/Paste – CRM wird sauber gepflegt"],
   },
   {
-    id: "dash",
+    id: "ops-dash",
     tag: "Dashboard",
-    title: "Live-Dashboards mit Share-Link",
-    result: "Transparenz für Teams & Kunden",
+    title: "Operations-Dashboard mit Share-Link",
+    result: "Transparenz ohne Nachfragen",
     summary:
-      "Account-basierte KPIs auf der Website, optional öffentlich teilbar – jederzeit wieder privat.",
-    media: "/portfolio/live-dashboard.gif",
-    bullets: ["Projekt-KPIs", "CO₂/Impact/Custom", "Public/Private Toggle"],
+      "KPIs live für Teams/Kunden teilen – jederzeit wieder privat schalten.",
+    bullets: ["Sofortiger Status für Stakeholder", "Weniger Rückfragen im Team", "Sharing/Unsharing per Klick"],
   },
   {
-    id: "api",
+    id: "invoice-erp",
     tag: "Integrationen",
-    title: "Partner-API",
-    result: "Automatische Updates statt Copy/Paste",
+    title: "Invoice → ERP (Parser & Export)",
+    result: "Erfassungszeit ↓ 70%",
     summary:
-      "JSON-Endpoints & API-Keys pro Kunde – Zahlen fließen automatisch in externe Seiten.",
-    media: "/portfolio/partner-api.gif",
-    bullets: ["Self-Service Keys", "Ratenlimit & Logging", "WordPress-Binding möglich"],
+      "Rechnungen automatisch auslesen, Felder mappen und als Buchungsvorschlag exportieren.",
+    bullets: ["Erfassung in Sekunden statt Minuten", "Fehler durch Regeln stark reduziert", "Export in DATEV/CSV/API"],
   },
   {
-    id: "repurpose",
+    id: "repurpose-ai",
     tag: "AI",
-    title: "AI-Repurposing App",
-    result: "Social Posts in Minuten",
+    title: "Post Repurposer (AI)",
+    result: "Content-Produktion in Minuten",
     summary:
-      "LinkedIn-Posts analysieren & in IG-Caption/Story-Snippets umschreiben – One-Click Publish.",
-    media: "/portfolio/ai-repurpose.gif",
-    bullets: ["Presets je Kanal", "Review-Step", "Direktes Posten"],
+      "LinkedIn-Post analysieren und als IG-Caption + Story-Snippets neu ausspielen.",
+    bullets: ["1 Quelle → 3 Formate", "Konsistente Brand-Voice", "Publish mit Review-Step"],
   },
 ]
+
+
 
 export default function Portfolio() {
   const [open, setOpen] = useState(false)
@@ -90,20 +88,22 @@ export default function Portfolio() {
             className="group text-left rounded-2xl border bg-card/60 shadow focus:outline-none focus:ring-2 focus:ring-primary/50"
           >
             <div className="relative aspect-[16/10] overflow-hidden rounded-t-2xl">
-              {/* Bild/GIF – optional; sonst Gradient */}
-              {p.media ? (
+              {/* Standard: Brand-Gradient */}
+              <div className="h-full w-full bg-brand-gradient" />
+              {/* Optionales Bild (wenn später media gesetzt ist) */}
+              {p.media && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={p.media}
                   alt={p.title}
-                  className="h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none" }}
                 />
-              ) : (
-                <div className="h-full w-full bg-brand-gradient" />
               )}
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors" />
             </div>
+
 
             <div className="p-4">
               <div className="flex items-center gap-2 text-xs">

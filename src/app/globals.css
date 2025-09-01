@@ -150,3 +150,18 @@
 }
 
 .text-balance { text-wrap: balance; }
+
+
+/* Smooth Scroll & Header-Offset für #anker */
+html { scroll-behavior: smooth; }
+
+[id] { scroll-margin-top: 96px; } /* Sticky-Header-Höhe */
+
+/* sanfter Glow auf Hover für interaktive Karten/Buttons */
+.hover-glow {
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 0 1px hsl(var(--ring)/0.4), 0 8px 30px -12px hsla(var(--brand-end)/0.35);
+  transform: translateY(-2px);
+}
