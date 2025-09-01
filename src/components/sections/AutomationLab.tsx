@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"          
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { CheckCircle2, Loader2, Mail, Calendar, FileText, Database, Play } from "lucide-react"
+import { CheckCircle2, Loader2, Play } from "lucide-react"  
 
 type UseCaseId = "lead" | "repurpose" | "invoice"
 

@@ -33,17 +33,14 @@ export default function About() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.35, delay: 0.1 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold">Über mich</h2>
-          <p className="mt-3 text-lg text-muted-foreground">
-            Ich bin 20 und baue seit über einem Jahr komplette Automatisierungen — von Zertifikats-Systemen
-            über Impact-Dashboards bis hin zu Partner-APIs. Vor ezeyflow habe ich diese Systeme bei einem
-            Impact-Unternehmen produktiv gemacht.
-          </p>
-          <p className="mt-3 text-muted-foreground">
-            Meine Mission: KI & Automatisierung so einfach und angenehm nutzbar machen,
-            dass jedes Team sofort profitiert. <em>Ich liebe es, wenn Technik nicht nur funktioniert,
-            sondern sich geil anfühlt.</em>
-          </p>
+        <p className="mt-3 text-lg text-muted-foreground">
+          Ich bin 20 und baue End-to-End-Automatisierungen – Zertifikate, Dashboards, Partner-APIs und AI-Workflows. 
+          Ich denke in „Eingang → Regeln → Aktionen“, damit aus manueller Arbeit ein klarer Flow wird.
+        </p>
+        <p className="mt-3 text-muted-foreground">
+          Ziel: in 1–2 Wochen live gehen und sofort Zeit sparen. Technik darf sich leicht anfühlen – genau das liefere ich.
+        </p>
+
 
           <div className="mt-6 flex flex-wrap gap-3">
             <Button className="rounded-xl" asChild>

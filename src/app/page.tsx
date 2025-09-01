@@ -8,6 +8,8 @@ import HeroBackdrop from "@/components/hero/HeroBackdrop"
 import About from "@/components/sections/About"
 import TrustStrip from "@/components/sections/TrustStrip"
 import StatsStrip from "@/components/sections/StatsStrip"
+import Process from "@/components/sections/Process"
+import FAQ from "@/components/sections/FAQ"
 
 
 
@@ -84,6 +86,8 @@ export default function Home() {
       <StatsStrip />
       <About />
       <TrustStrip />
+      <Process />
+      <FAQ />
       <Funnel />
 
       <section id="funnel" className="mx-auto max-w-7xl px-6 py-24">

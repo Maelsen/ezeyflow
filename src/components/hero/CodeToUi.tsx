@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 
 type Phase = "code" | "ui"
 
-// Basis-Codefragmente (werden bunt und vervielfacht)
+
 const BASE = [
   'import { Router } from "server"',
   "const router = new Router()",
@@ -21,7 +21,7 @@ const BASE = [
   "queue.on('completed', (job) => log(job.id))",
 ]
 
-// bunte Zeilen erzeugen (VS-like)
+
 function useColoredLines() {
   return useMemo(() => {
     const C = { kw: "text-emerald-300", fn: "text-sky-300", str: "text-fuchsia-300", num: "text-amber-300" }
@@ -77,7 +77,7 @@ export default function CodeToUi() {
   )
 }
 
-/** Full-bleed „Matrix“: schnelle Vertikalbewegung + weiche Ränder (oben/unten/links/rechts) */
+
 function CodePane({ lines }: { lines: JSX.Element[] }) {
   return (
     <motion.div
@@ -86,7 +86,7 @@ function CodePane({ lines }: { lines: JSX.Element[] }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.98, filter: "blur(2px)" }}
       transition={{ duration: 0.35 }}
-      // Fades an allen Kanten via Overlays
+      
     >
       {/* Edge fades */}
       <div className="pointer-events-none absolute inset-0">
@@ -101,7 +101,7 @@ function CodePane({ lines }: { lines: JSX.Element[] }) {
         className="absolute inset-0 font-mono text-[13px] text-slate-100 px-8"
         initial={{ y: 0 }}
         animate={{ y: -320 }}
-        transition={{ duration: 2.2, ease: "linear" }} // schneller, matrix-artig
+        transition={{ duration: 2.2, ease: "linear" }} 
       >
         {lines}
         <div className="mt-2 text-slate-500">// …</div>
@@ -111,7 +111,6 @@ function CodePane({ lines }: { lines: JSX.Element[] }) {
   )
 }
 
-/** UI erscheint nicht als „Slide“, sondern die Codefläche morpht zur Hauptkarte (layoutId). */
 function UiPane() {
   return (
     <motion.div

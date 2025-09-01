@@ -2,8 +2,16 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import useActiveSection from "@/lib/useActiveSection"
 
 export default function Header() {
+  // Hook MUSS im Body stehen (nicht top-level!)
+  const active = useActiveSection(["why", "demo", "portfolio", "process", "faq", "funnel"])
+  const link = (id: string) =>
+    `opacity-80 hover:opacity-100 transition-colors ${
+      active === id ? "text-foreground font-semibold underline underline-offset-4 decoration-primary/50" : ""
+    }`
+
   return (
     <>
       <a href="#funnel" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 rounded bg-primary px-3 py-2 text-sm text-primary-foreground">
@@ -15,9 +23,11 @@ export default function Header() {
             <span className="text-brand-gradient">ezeyflow</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#why" className="opacity-80 hover:opacity-100">Warum wir</a>
-            <a href="#demo" className="opacity-80 hover:opacity-100">Demo</a>
-            <a href="#portfolio" className="opacity-80 hover:opacity-100">Projekte</a>
+            <a href="#why" className={link("why")}>Warum wir</a>
+            <a href="#demo" className={link("demo")}>Demo</a>
+            <a href="#portfolio" className={link("portfolio")}>Projekte</a>
+            <a href="#process" className={link("process")}>Ablauf</a>
+            <a href="#faq" className={link("faq")}>FAQ</a>
           </nav>
           <Button asChild className="rounded-xl">
             <a href="#funnel">Kostenloses Erstgespräch</a>
