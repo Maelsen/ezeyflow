@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         from,
         to,
         subject: `Neue Kontaktanfrage – ${data.name} (${data.email})`,
-        reply_to: data.email,
+        replyTo: data.email,
         text: `
 Name: ${data.name}
 E-Mail: ${data.email}
