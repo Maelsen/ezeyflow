@@ -8,19 +8,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+
+  /* Theme-Mappings bleiben bestehen, referenzieren aber nur noch die neuen Vars */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -37,86 +26,586 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* === BRAND + SURFACE (aus Logo abgeleitet) === */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Brand: Cyan → Blue → Violet (Logo) */
+  --brand-cyan: 191 100% 50%;   /* #00D1FF */
+  --brand-blue: 227 100% 59%;   /* #2B6CFF */
+  --brand-violet: 256 100% 61%; /* #7A3CFF */
+
+  /* Surfaces: satt & gefüllt (kein "durchsichtig") */
+  --surface-900: 222 45% 7%;   /* page bg (#0B1220) */
+  --surface-800: 222 47% 10%;  /* cards/nav */
+  --surface-700: 222 42% 13%;
+  --surface-600: 222 38% 16%;
+
+  /* Text/Funktionsfarben */
+  --foreground: 210 40% 98%;
+  --muted-foreground: 215 20% 75%;
+
+  /* Semantic alias (nutzen wir später in Tailwind) */
+  --background: var(--surface-900);
+  --card: var(--surface-800);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-800);
+  --popover-foreground: var(--foreground);
+  --border: 216 34% 20%;
+  --input: 216 34% 20%;
+  --ring: var(--brand-blue);
+  --radius: 16px;
+
+  /* Primär/Accent leiten wir direkt vom Brand ab */
+  --primary: var(--brand-blue);
+  --primary-foreground: 210 40% 98%;
+  --accent: var(--brand-cyan);
+  --accent-foreground: 210 40% 98%;
+  --secondary: var(--surface-700);
+  --secondary-foreground: 210 40% 96%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Basis: nur Farbe, KEIN background-image mehr */
+body {
+  @apply bg-background text-foreground antialiased;
+  background: none !important;
 }
 
+
+/* subtle grid overlay (optional toggle later) */
+.bg-grid{
+  background-image:
+    linear-gradient(hsl(var(--brand-blue) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--brand-blue) / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px;     /* etwas größere Kästchen */
+  background-position: -1px -1px;
+}
+
+/* handy utilities */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* === Tailwind Base Layer === */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
+}
+
+
+/* Kanten weicher ein- / ausblenden für Marquee */
+.mask-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+
+/* === Marquee FIX (CSS-first, unabhängig von Tailwind-Config) === */
+@keyframes ezey-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ezey-animate-marquee {
+  animation: ezey-marquee 28s linear infinite;
+  will-change: transform;
+}
+
+/* Barrierefreiheit: Motion reduzieren respektieren */
+@media (prefers-reduced-motion: reduce) {
+  .ezey-animate-marquee { animation: none; }
+}
+
+
+/* === POLISH: Shine, Gradient-Border, Partikel, Text-Glow === */
+
+/* Button-Glanz */
+@keyframes ezey-btn-shine {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+.btn-shine { position: relative; overflow: hidden; }
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  transform: translateX(-120%);
+  animation: ezey-btn-shine 2.4s linear infinite;
+  pointer-events: none;
+}
+
+/* Laufende Farbwelle für Texte */
+@keyframes ezey-text-shine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.text-shine {
+  background-size: 200% 100%;
+  animation: ezey-text-shine 4s linear infinite;
+}
+
+/* Schwebende Glows / Partikel */
+@keyframes ezey-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Schwebende Glows / Partikel */
+@keyframes ezey-drift {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(10px, -8px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Basis-Partikel: gut sichtbar, weißer Stern-Glow */
+.particle {
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9); /* fast reinweiß */
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(43, 108, 255, 0.55); /* leichter blauer Schimmer */
+  animation: ezey-drift 8s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+
+/* Aktive Partikel (in Maus-Nähe): Brand-Gradient + starker Glow */
+.particle-active {
+  width: 5px;
+  height: 5px;
+  opacity: 1;
+  background-image: radial-gradient(
+    circle at center,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+  box-shadow:
+    0 0 20px hsl(var(--brand-cyan) / 0.9),
+    0 0 32px hsl(var(--brand-blue) / 0.8),
+    0 0 40px hsl(var(--brand-violet) / 0.8);
+  transform: scale(1.05);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .particle {
+    animation: none !important;
   }
+}
+
+.float-slow { animation: ezey-float 8s ease-in-out infinite; }
+
+/* Gradient-Border (1px) mit Mask */
+.gradient-border { position: relative; }
+.gradient-border::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: linear-gradient(90deg, rgba(0,209,255,0.45), rgba(43,108,255,0.45), rgba(122,60,255,0.45));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+
+/* Aurora-Flächen */
+.bg-aurora{
+  background:
+    radial-gradient(closest-side, hsl(var(--brand-cyan) / 0.36), transparent 62%),
+    radial-gradient(closest-side, hsl(var(--brand-violet) / 0.30), transparent 62%);
+}
+
+/* Marquee (bereits vorhanden) respektiert Barrierefreiheit */
+@media (prefers-reduced-motion: reduce) {
+  .btn-shine::after, .text-shine, .ezey-animate-marquee, .float-slow, .particle { animation: none !important; }
+}
+
+/* === Brand Gradients (für Buttons, Flächen, Text) === */
+.bg-brand-gradient {
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+}
+.bg-brand-gradient-soft {
+  background-image: linear-gradient(135deg,
+    hsl(var(--brand-cyan) / .16),
+    hsl(var(--brand-blue) / .16),
+    hsl(var(--brand-violet) / .16)
+  );
+}
+.text-brand-gradient {
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+
+/* === TAG 0 QUICK FIXES === */
+
+/* 1) Sichere Container-Zentrierung (unabhängig von Tailwind) */
+.container{
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 1536px){
+  .container{ max-width: 1440px; }
+}
+
+/* 2) Gradient-Text robust (fix für unsichtbare Wörter) */
+.bg-clip-text{
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+/* wenn ein Element text-transparent ist, trotzdem korrekt clippen */
+:where(.bg-clip-text).text-transparent{
+  -webkit-text-fill-color: transparent;
+}
+
+/* 3) Sichtbarer CTA-Block (falls irgendwo nur Text erscheint) */
+.btn-primary{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.75rem 1.25rem; border-radius: 0.75rem; font-weight: 600;
+  color: #0b1220; /* dunkler text */
+  background-image: linear-gradient(90deg,#00D1FF,#2B6CFF,#7A3CFF);
+  box-shadow: 0 10px 30px rgba(43,108,255,0.25);
+}
+.btn-primary:hover{ opacity: .95; }
+
+/* 4) Marquee/Animationen respektieren reduce-motion (beibehalten) */
+@media (prefers-reduced-motion: reduce){
+  .ezey-animate-marquee{ animation: none !important; }
+}
+
+/* Brand-Grid (leicht getönt) */
+.bg-grid-brand {
+  background-image:
+    linear-gradient(hsl(var(--brand-blue) / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--brand-blue) / 0.08) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px;
+  background-position: -1px -1px;
+}
+
+
+/* === TAG 2: Cards & Chips === */
+.card {
+  border-radius: 16px;
+  background-color: hsl(var(--surface-800));
+  border: 1px solid hsl(var(--border) / 0.6);
+  background-image:
+    linear-gradient(135deg,
+      hsl(var(--brand-cyan) / .08),
+      hsl(var(--brand-blue) / .06),
+      hsl(var(--brand-violet) / .08)
+    );
+  transition: transform .2s.ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(43,108,255,.18), 0 8px 28px rgba(122,60,255,.14);
+  border-color: hsl(var(--brand-blue) / .35);
+}
+
+/* kompakte, gefüllte Badges/Chips */
+.chip {
+  display: inline-flex; align-items: center; gap: .375rem;
+  height: 32px; padding: 0 .75rem; border-radius: 9999px;
+  font-weight: 600; font-size: .85rem; letter-spacing: .01em;
+  color: hsl(var(--foreground));
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan) / .20),
+    hsl(var(--brand-blue) / .20),
+    hsl(var(--brand-violet) / .20)
+  );
+  border: 1px solid hsl(var(--brand-blue) / .30);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  border-color: hsl(var(--brand-blue) / .50);
+  box-shadow: 0 10px 26px rgba(43,108,255,.22);
+}
+
+
+/* === TAG 3: Hero Deluxe === */
+
+/* 1) Stroke-Draw für die Logo-Welle – loopend, ohne Lücke */
+@keyframes ezey-stroke {
+  0%   { stroke-dashoffset: 1; }   /* komplett „versteckt“ */
+  40%  { stroke-dashoffset: 0; }   /* vollständig gezeichnet */
+  60%  { stroke-dashoffset: 0; }   /* kurz stehen lassen */
+  100% { stroke-dashoffset: -1; }  /* wieder „wegwischen“ */
+}
+
+.stroke-draw {
+  stroke-dasharray: 1;             /* ganze Pfadlänge */
+  stroke-dashoffset: 1;
+  animation: ezey-stroke 6s ease-in-out infinite;
+}
+
+
+
+/* 2) Glow für SVG-Linien */
+.wave-glow {
+  filter:
+    drop-shadow(0 0 20px rgba(43,108,255,.35))
+    drop-shadow(0 0 36px rgba(122,60,255,.25));
+}
+
+/* 3) Edle, bewegte Verlaufsschrift (nutzt deine vorhandene text-shine) */
+.headline-accent {
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-cyan))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: ezey-text-shine 6s linear infinite; /* keyframes existieren schon */
+}
+
+
+/* === TAG 4: Marquee Premium === */
+
+/* Pause der Laufanimation, wenn der User drüber hovert */
+.group:hover .ezey-animate-marquee { animation-play-state: paused; }
+
+/* Logo-Pill (neutraler als .chip, damit Text gut lesbar bleibt) */
+.logo-pill{
+  display: inline-flex; align-items: center; gap: .5rem;
+  height: 42px; padding: 0 .9rem; border-radius: 9999px;
+  background: hsl(var(--surface-700) / .75);
+  border: 1px solid hsl(var(--border) / .6);
+  color: hsl(var(--foreground));
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s.ease, background-color .2s;
+}
+.logo-pill:hover{
+  transform: translateY(-1px);
+  border-color: hsl(var(--brand-blue) / .5);
+  box-shadow: 0 10px 26px rgba(43,108,255,.18);
+  background: hsl(var(--surface-700) / .9);
+}
+
+/* kleines, leichtes Tooltip */
+.tooltip{
+  position: absolute; left: 50%; bottom: 100%;
+  transform: translate(-50%, -6px);
+  padding: .3rem .5rem; border-radius: .5rem;
+  font-size: .75rem; white-space: nowrap;
+  background: hsl(var(--surface-800)); color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border) / .6);
+  box-shadow: 0 10px 26px rgba(0,0,0,.25);
+  opacity: 0; pointer-events: none; transition: opacity .15s ease, transform .15s ease;
+}
+.group\/item:hover .tooltip{ opacity: 1; transform: translate(-50%, -10px); }
+
+
+/* === TAG 5: Flow Timeline === */
+
+/* horizontale Progress-Schiene (Desktop) */
+.flow-rail-h{
+  position:absolute; inset-inline:0; top:50%; height:4px; transform:translateY(-50%);
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan) / .55),
+    hsl(var(--brand-blue) / .55),
+    hsl(var(--brand-violet) / .55)
+  );
+  border-radius:9999px; opacity:.55;
+}
+
+/* vertikale Progress-Schiene (Mobile) */
+.flow-rail-v{
+  position:absolute; left:22px; top:0; bottom:0; width:4px;
+  background-image: linear-gradient(180deg,
+    hsl(var(--brand-cyan) / .55),
+    hsl(var(--brand-blue) / .55),
+    hsl(var(--brand-violet) / .55)
+  );
+  border-radius:9999px; opacity:.45;
+}
+
+/* Knotenpunkte auf der Rail */
+.step-dot{
+  position:absolute; width:12px; height:12px; border-radius:9999px;
+  background:hsl(var(--brand-blue)); border:2px solid hsl(var(--brand-cyan));
+  box-shadow: 0 0 18px rgba(43,108,255,.55), 0 0 28px rgba(122,60,255,.35);
+}
+
+
+/* === TAG 6: About-Me === */
+
+/* runder Avatar mit 1px Gradient-Ring (mask trick) */
+.avatar-ring{
+  position: relative; border-radius: 9999px;
+}
+.avatar-ring::before{
+  content:""; position:absolute; inset:0; padding:2px; border-radius:9999px;
+  background: linear-gradient(90deg,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; /* Safari */
+  mask-composite: exclude;       /* Chrome/Edge/FF */
+  pointer-events:none;
+}
+
+/* Metric Zahl + Label */
+.metric{
+  display:flex; flex-direction:column;
+}
+.metric .value{
+  font-weight:800; letter-spacing:.01em;
+  font-size:1.75rem; line-height:1.1;
+  background-image: linear-gradient(90deg,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.metric .label{
+  font-size:.85rem; color: hsl(var(--foreground) / .75);
+}
+
+
+/* === TAG 7: Header/Nav Premium === */
+
+/* dezente Glas-Navi */
+.glass-nav{
+  background: hsl(var(--surface-800) / .66);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid hsl(var(--border) / .55);
+}
+
+/* stärkerer Look beim Scrollen */
+.nav-scrolled{
+  background: hsl(var(--surface-800) / .78);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px hsl(var(--border) / .55) inset;
+}
+
+/* Gradient-Edge oben (fein) – optionaler Akzent */
+.nav-edge{
+  position: relative;
+}
+.nav-edge::before{
+  content:""; position:absolute; inset-inline:0; top:-1px; height:1px;
+  background: linear-gradient(90deg,
+    hsl(var(--brand-cyan) / .6),
+    hsl(var(--brand-blue) / .6),
+    hsl(var(--brand-violet) / .6)
+  );
+  opacity:.6; pointer-events:none;
+}
+
+/* jeder Section-Block, der per #anchor angesteuert wird */
+.section-anchor {
+  scroll-margin-top: 88px; /* Header-Höhe + Luft */
+}
+
+/* === TAG 9: Micro-Interactions === */
+
+/* Smooth scroll für Anker (mit A11y-Fallback) */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Leichte 3D-Stage für Tilt */
+.tilt-stage { perspective: 900px; }
+
+/* === TAG 10: FAQ + Footer === */
+
+/* FAQ: Button-Hitbox & Focus klar sichtbar */
+.faq-item-btn {
+  display:flex; align-items:center; justify-content:space-between;
+  width:100%; text-align:left; padding:1rem 1.25rem; border-radius:0.75rem;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.faq-item-btn:hover { background:hsl(var(--surface-700) / .65); }
+.faq-item-btn:focus-visible {
+  outline: 2px solid hsl(var(--brand-blue) / .6);
+  outline-offset: 2px;
+}
+
+/* Footer: feine Brand-Linie am oberen Rand */
+.footer-edge { position:relative; }
+.footer-edge::before{
+  content:""; position:absolute; inset-inline:0; top:0; height:1px;
+  background: linear-gradient(90deg,
+    hsl(var(--brand-cyan) / .65),
+    hsl(var(--brand-blue) / .65),
+    hsl(var(--brand-violet) / .65)
+  );
+  opacity:.65; pointer-events:none;
+}
+
+/* Footer-Links */
+.footer-link { color:hsl(var(--foreground) / .8); }
+.footer-link:hover { color:hsl(var(--foreground)); text-decoration:underline; }
+
+/* helpers for 3D flip */
+.backface-hidden{-webkit-backface-visibility:hidden;backface-visibility:hidden;}
+.rotate-y-180{transform:rotateY(180deg);}
+.code-mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono", "Courier New", monospace;}
+
+/* Hero-Feature-Sterne auf der Timeline */
+.hero-star {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0.85)
+  );
+  box-shadow:
+    0 0 16px rgba(255, 255, 255, 0.95),
+    0 0 28px rgba(43, 108, 255, 0.75);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-image 0.25s ease;
+}
+
+/* Hover über den ganzen Step (group/star) → Stern in Brandfarben */
+.group\/star:hover .hero-star {
+  transform: translateX(-50%) scale(1.4);
+  background-image: radial-gradient(
+    circle at center,
+    hsl(var(--brand-cyan)),
+    hsl(var(--brand-blue)),
+    hsl(var(--brand-violet))
+  );
+  box-shadow:
+    0 0 24px hsl(var(--brand-cyan) / 0.95),
+    0 0 40px hsl(var(--brand-blue) / 0.95),
+    0 0 52px hsl(var(--brand-violet) / 0.98);
 }
