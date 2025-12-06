@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useState, useRef, useLayoutEffect } from "react"
-import { 
-  motion, 
-  AnimatePresence, 
-  useScroll, 
-  useMotionValueEvent, 
-  useSpring 
+import React, { useState, useRef, useLayoutEffect, useCallback, useMemo } from "react"
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+  useSpring
 } from "framer-motion"
 import {
   FileText, Bot, Unplug, Network, Search, LayoutDashboard,
@@ -52,9 +52,9 @@ const Magnetic = ({ children }: { children: React.ReactNode }) => {
 // STYLED BUTTON
 const Button = ({ children, variant = "primary", size = "default", className, asChild, ...props }: any) => {
   const Comp = asChild ? "div" : "button";
-  
+
   const baseStyle = "inline-flex items-center justify-center rounded-lg font-medium transition-all focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
-  
+
   const variants = {
     // Das ist der Style vom mittleren Paket (Gradient)
     primary: "bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_-5px_rgba(139,92,246,0.6)] hover:scale-[1.02] border border-transparent",
@@ -68,8 +68,8 @@ const Button = ({ children, variant = "primary", size = "default", className, as
 
   // @ts-ignore
   return (
-    <Comp 
-      className={cn(baseStyle, variants[variant], sizes[size], className)} 
+    <Comp
+      className={cn(baseStyle, variants[variant], sizes[size], className)}
       {...props}
     >
       {children}
@@ -188,8 +188,8 @@ export function UspGrid() {
     restDelta: 0.001
   });
 
-  // 2. Map Scroll to Index
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+  // 2. Map Scroll to Index (Optimized with useCallback)
+  const handleScrollChange = useCallback((latest: number) => {
     if (hasCompleted) return
 
     if (latest > 0.99) {
@@ -203,7 +203,9 @@ export function UspGrid() {
       pairs.length - 1
     )
     setActiveIndex(newIndex)
-  })
+  }, [hasCompleted])
+
+  useMotionValueEvent(scrollYProgress, "change", handleScrollChange)
 
   // FIX: Anti-Teleport
   useLayoutEffect(() => {
@@ -213,25 +215,23 @@ export function UspGrid() {
     }
   }, [hasCompleted])
 
-  const handleManualClick = (index: number) => {
+  const handleManualClick = useCallback((index: number) => {
     setActiveIndex(index)
-  }
+  }, [])
 
   return (
     <section
       ref={containerRef}
-      className={`relative font-sans selection:bg-cyan-500/30 transition-all ${
-        hasCompleted ? "min-h-screen" : "h-[450vh]"
-      }`}
-    >
-      <div 
-        className={`${
-          hasCompleted 
-            ? "relative min-h-screen flex flex-col overflow-hidden" 
-            : "sticky top-0 h-screen flex flex-col overflow-hidden"
+      className={`relative font-sans selection:bg-cyan-500/30 transition-all ${hasCompleted ? "min-h-screen" : "h-[450vh]"
         }`}
+    >
+      <div
+        className={`${hasCompleted
+            ? "relative min-h-screen flex flex-col overflow-hidden"
+            : "sticky top-0 h-screen flex flex-col overflow-hidden"
+          }`}
       >
-        
+
         {/* Ambient Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <DataStream />
@@ -284,11 +284,10 @@ export function UspGrid() {
           <div className="w-full h-1 bg-slate-900 rounded-full mb-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-slate-800/50" />
             <motion.div
-              className={`relative h-full shadow-[0_0_20px_rgba(6,182,212,0.8)] origin-left ${
-                hasCompleted
+              className={`relative h-full shadow-[0_0_20px_rgba(6,182,212,0.8)] origin-left ${hasCompleted
                   ? "bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]"
                   : "bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600"
-              }`}
+                }`}
               style={{ scaleX: hasCompleted ? 1 : scaleX }}
             />
           </div>
@@ -305,11 +304,10 @@ export function UspGrid() {
                   <button
                     key={pair.id}
                     onClick={() => handleManualClick(index)}
-                    className={`group relative w-full text-left rounded-xl transition-all duration-500 border overflow-hidden ${
-                      isActive
+                    className={`group relative w-full text-left rounded-xl transition-all duration-500 border overflow-hidden ${isActive
                         ? "bg-slate-800/80 border-cyan-500/50 p-5 shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30"
                         : "bg-transparent border-transparent p-4 opacity-40 hover:opacity-100 hover:bg-slate-900/40"
-                    }`}
+                      }`}
                   >
                     {isActive && (
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent translate-x-[-100%] animate-[shimmer_2s_infinite]" />
@@ -317,13 +315,12 @@ export function UspGrid() {
 
                     <div className="flex items-center gap-4 relative z-10">
                       <div
-                        className={`relative p-2.5 rounded-lg transition-all duration-500 ${
-                          isActive
+                        className={`relative p-2.5 rounded-lg transition-all duration-500 ${isActive
                             ? "bg-gradient-to-br from-cyan-500/20 to-blue-600/20 text-cyan-300 scale-110"
                             : isPast
-                            ? "bg-emerald-500/10 text-emerald-500"
-                            : "bg-slate-800/50 text-slate-500"
-                        }`}
+                              ? "bg-emerald-500/10 text-emerald-500"
+                              : "bg-slate-800/50 text-slate-500"
+                          }`}
                       >
                         {isPast && !isActive ? <CheckCircle2 className="h-5 w-5" /> : pair.problemIcon}
                       </div>
@@ -331,30 +328,27 @@ export function UspGrid() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
                           <span
-                            className={`text-[10px] font-mono uppercase tracking-wider mb-1 block transition-colors ${
-                              isActive
+                            className={`text-[10px] font-mono uppercase tracking-wider mb-1 block transition-colors ${isActive
                                 ? "text-cyan-400 font-bold"
                                 : isPast
-                                ? "text-emerald-500"
-                                : "text-slate-500"
-                            }`}
+                                  ? "text-emerald-500"
+                                  : "text-slate-500"
+                              }`}
                           >
                             {isPast && !isActive ? "Optimized" : pair.tag}
                           </span>
                         </div>
                         <div
-                          className={`font-semibold text-sm transition-colors duration-300 ${
-                            isActive || isPast ? "text-white" : "text-slate-400"
-                          }`}
+                          className={`font-semibold text-sm transition-colors duration-300 ${isActive || isPast ? "text-white" : "text-slate-400"
+                            }`}
                         >
                           {pair.problemTitle}
                         </div>
                       </div>
 
                       <div
-                        className={`transition-all duration-300 ${
-                          isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
-                        }`}
+                        className={`transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+                          }`}
                       >
                         <ChevronRight className="h-4 w-4 text-cyan-400" />
                       </div>

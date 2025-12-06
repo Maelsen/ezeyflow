@@ -609,3 +609,121 @@ html { scroll-behavior: smooth; }
     0 0 40px hsl(var(--brand-blue) / 0.95),
     0 0 52px hsl(var(--brand-violet) / 0.98);
 }
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+
+/* GPU Acceleration for all animations */
+.ezey-animate-marquee,
+.particle,
+.float-slow,
+.btn-shine::after,
+.text-shine,
+.stroke-draw {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize Framer Motion animations */
+[data-framer-motion] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Smooth scrolling with GPU */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize heavy animated sections */
+.usp-grid-section,
+.case-studies-section,
+.packages-section {
+  contain: layout style paint;
+  will-change: contents;
+}
+
+/* Optimize scroll-triggered animations */
+.scroll-trigger {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Reduce repaints for fixed elements */
+.glass-nav,
+.nav-scrolled {
+  will-change: transform, background-color;
+  transform: translateZ(0);
+}
+
+/* Optimize hover effects */
+.card,
+.chip,
+.logo-pill,
+.btn-primary {
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimize gradient animations */
+.bg-brand-gradient,
+.text-brand-gradient,
+.headline-accent {
+  background-attachment: fixed;
+  will-change: background-position;
+}
+
+/* Prevent layout shifts */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optimize Calendly iframe */
+iframe {
+  will-change: contents;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .ezey-animate-marquee,
+  .particle,
+  .float-slow,
+  .btn-shine::after,
+  .text-shine,
+  .stroke-draw {
+    animation: none !important;
+    will-change: auto;
+  }
+}
+
+/* Optimize text rendering */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize compositing layers */
+.hero-section,
+.brand-marquee,
+.contact-section {
+  transform: translateZ(0);
+  will-change: contents;
+}
+
