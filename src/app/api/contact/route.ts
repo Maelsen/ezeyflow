@@ -7,7 +7,9 @@ const ContactSchema = z.object({
   email: z.string().email("Ungültige E-Mail"),
   company: z.string().optional().default(""),
   message: z.string().min(10, "Bitte etwas ausführlicher"),
-  consent: z.literal(true, { errorMap: () => ({ message: "Bitte Zustimmung geben" }) }),
+  consent: z.boolean().refine((val) => val === true, {
+    message: "Bitte Zustimmung geben",
+  }),
   // Honeypot (muss leer sein)
   website: z.string().optional().default(""),
 })
