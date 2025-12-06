@@ -28,27 +28,27 @@ log.info('Pipeline aktualisiert & E-Mail versendet ✔')`
 
 /* ---------- Mini-Highlighter (VS Code Dark+) ---------- */
 function highlightToHtml(src: string) {
-  const esc = (s: string) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   const pats = [
-    { c:"comment",  r:/\/\/[^\n]*/y },
-    { c:"string",   r:/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/y },
-    { c:"number",   r:/\b\d+(?:\.\d+)?\b/y },
-    { c:"boolean",  r:/\b(?:true|false)\b/y },
-    { c:"nullish",  r:/\b(?:null|undefined)\b/y },
-    { c:"keyword",  r:/\b(?:const|let|var|await|async|return|if|else|for|of|in|try|catch|finally|throw|new|function|export|import|from)\b/y },
-    { c:"property", r:/\b[A-Za-z_]\w*(?=\s*:)/y },
-    { c:"func",     r:/\b[A-Za-z_]\w*(?=\s*\()/y },
-    { c:"punct",    r:/[{}()[\].,;:]/y },
-    { c:"op",       r:/[+\-/*%=&|^!<>]+/y },
-    { c:"ws",       r:/\s+/y, raw:true },
-    { c:"ident",    r:/\b[A-Za-z_]\w*\b/y },
+    { c: "comment", r: /\/\/[^\n]*/y },
+    { c: "string", r: /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/y },
+    { c: "number", r: /\b\d+(?:\.\d+)?\b/y },
+    { c: "boolean", r: /\b(?:true|false)\b/y },
+    { c: "nullish", r: /\b(?:null|undefined)\b/y },
+    { c: "keyword", r: /\b(?:const|let|var|await|async|return|if|else|for|of|in|try|catch|finally|throw|new|function|export|import|from)\b/y },
+    { c: "property", r: /\b[A-Za-z_]\w*(?=\s*:)/y },
+    { c: "func", r: /\b[A-Za-z_]\w*(?=\s*\()/y },
+    { c: "punct", r: /[{}()[\].,;:]/y },
+    { c: "op", r: /[+\-/*%=&|^!<>]+/y },
+    { c: "ws", r: /\s+/y, raw: true },
+    { c: "ident", r: /\b[A-Za-z_]\w*\b/y },
   ]
-  let i=0, out=""
-  while(i<src.length){
-    let m:any=null, p:any=null
-    for(const _p of pats){ _p.r.lastIndex=i; const mm=_p.r.exec(src); if(mm){ m=mm; p=_p; break } }
-    if(!m){ out+=esc(src[i]); i++; continue }
-    const t=esc(m[0]); out+=p.raw? t : `<span class="tok tok-${p.c}">${t}</span>`; i=p.r.lastIndex
+  let i = 0, out = ""
+  while (i < src.length) {
+    let m: any = null, p: any = null
+    for (const _p of pats) { _p.r.lastIndex = i; const mm = _p.r.exec(src); if (mm) { m = mm; p = _p; break } }
+    if (!m) { out += esc(src[i]); i++; continue }
+    const t = esc(m[0]); out += p.raw ? t : `<span class="tok tok-${p.c}">${t}</span>`; i = p.r.lastIndex
   }
   return out
 }
@@ -59,17 +59,18 @@ function Donut({ value = 0.92, run = false }: { value?: number; run?: boolean })
   const C = 2 * Math.PI * r
   const dash = C * (1 - value)
   return (
-    <svg width={size} height={size} className="-rotate-90">
-      <circle cx={size/2} cy={size/2} r={r} stroke="rgba(255,255,255,.12)" strokeWidth={stroke} fill="none" />
+    <svg width={size} height={size} className="-rotate-90" style={{ willChange: "transform" }}>
+      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,.12)" strokeWidth={stroke} fill="none" />
       <motion.circle
-        cx={size/2} cy={size/2} r={r}
+        cx={size / 2} cy={size / 2} r={r}
         stroke="hsl(var(--brand-blue))"
         strokeWidth={stroke}
         strokeLinecap="round"
         fill="none"
         initial={{ strokeDasharray: C, strokeDashoffset: C }}
         animate={run ? { strokeDasharray: C, strokeDashoffset: dash } : { strokeDasharray: C, strokeDashoffset: C }}
-        transition={{ duration: 1, ease: [0.22,1,0.36,1], delay: .2 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: .2 }}
+        style={{ willChange: "stroke-dashoffset" }}
       />
     </svg>
   )
@@ -82,9 +83,9 @@ function Mouse({ controls, visible }: { controls: ReturnType<typeof useAnimation
       className="pointer-events-none absolute z-[999]"
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ opacity: { duration: 0.25 } }}
-      style={{ willChange: "transform" }}
+      style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
     >
-      <motion.div animate={controls}>
+      <motion.div animate={controls} style={{ willChange: "transform" }}>
         <div className="h-5 w-5 rounded-full bg-white/95 shadow-[0_0_0_2px_rgba(0,0,0,.25)]" />
       </motion.div>
     </motion.div>
@@ -132,7 +133,7 @@ export default function ShowcaseTypingWaveToDashboard() {
   const lineCount = useMemo(() => Math.max(20, content.split("\n").length + 2), [content])
 
   const appRef = useRef<HTMLDivElement>(null)
-  const tabRefs = useRef<(HTMLDivElement|null)[]>([])
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([])
   const mouse = useAnimation()
 
   // Sichtbarkeits-Start
@@ -177,7 +178,7 @@ export default function ShowcaseTypingWaveToDashboard() {
   useEffect(() => {
     if (!tabsVisible) return
     let dead = false
-    const sleep = (ms:number) => new Promise(r => setTimeout(r, ms))
+    const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
     const run = async () => {
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
@@ -186,7 +187,7 @@ export default function ShowcaseTypingWaveToDashboard() {
       const root = appRef.current?.getBoundingClientRect()
       if (!root) return
 
-      await mouse.set({ x: (root.width/2), y: 12, scale: 1 })
+      await mouse.set({ x: (root.width / 2), y: 12, scale: 1 })
       setMouseOn(true)
       await sleep(PAUSE_BEFORE_MOUSE)
 
@@ -194,22 +195,22 @@ export default function ShowcaseTypingWaveToDashboard() {
         if (!el || !root) return { x: 40, y: 60 }
         const r = el.getBoundingClientRect()
         return {
-          x: r.left - root.left + Math.min(40, r.width*0.25),
-          y: r.top  - root.top  + r.height/2
+          x: r.left - root.left + Math.min(40, r.width * 0.25),
+          y: r.top - root.top + r.height / 2
         }
       }
 
-      for (const idx of [0,1]) {
+      for (const idx of [0, 1]) {
         if (dead) return
         setHoverIdx(idx)
         const p = centerOf(tabRefs.current[idx]!)
-        await mouse.start({ x: p.x, y: p.y, transition: { duration: HOVER_DUR, ease: [0.22,1,0.36,1] } })
+        await mouse.start({ x: p.x, y: p.y, transition: { duration: HOVER_DUR, ease: [0.22, 1, 0.36, 1] } })
         await sleep(HOVER_GAP)
         setHoverIdx(null)
       }
 
       const p = centerOf(tabRefs.current[2]!)
-      await mouse.start({ x: p.x, y: p.y, transition: { duration: HOVER_DUR, ease: [0.22,1,0.36,1] } })
+      await mouse.start({ x: p.x, y: p.y, transition: { duration: HOVER_DUR, ease: [0.22, 1, 0.36, 1] } })
       setActiveIdx(2)
       await mouse.start({ scale: 0.92, transition: { duration: 0.12 } })
       await mouse.start({ scale: 1.00, transition: { duration: 0.16 } })
@@ -283,7 +284,11 @@ export default function ShowcaseTypingWaveToDashboard() {
                 initial={{ clipPath: "circle(0% at 78% 22%)" }}
                 animate={reveal ? { clipPath: "circle(140% at 78% 22%)" } : {}}
                 transition={{ duration: REVEAL_DUR, ease: EASE }}
-                style={{ background: "linear-gradient(135deg, rgba(7,17,35,1) 0%, rgba(6,10,24,1) 100%)" }}
+                style={{
+                  background: "linear-gradient(135deg, rgba(7,17,35,1) 0%, rgba(6,10,24,1) 100%)",
+                  willChange: "clip-path",
+                  transform: "translateZ(0)"
+                }}
               >
                 {/* Maus */}
                 <Mouse controls={mouse} visible={mouseOn && tabsVisible && !showPage} />
@@ -333,7 +338,7 @@ export default function ShowcaseTypingWaveToDashboard() {
                     className="h-full grid grid-rows-[auto,1fr] p-4"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.25,1,0.3,1] }}
+                    transition={{ duration: 0.6, ease: [0.25, 1, 0.3, 1] }}
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <div className="text-sm">
@@ -352,8 +357,8 @@ export default function ShowcaseTypingWaveToDashboard() {
                       >
                         {[
                           { k: "⏳ Zeitersparnis durch ezeyflow", v: "34 h / Woche" },
-                          { k: "⚙️ Aktive Flows",  v: "18" },
-                          { k: "⬇ Fehlerquote",  v: "−72%" },
+                          { k: "⚙️ Aktive Flows", v: "18" },
+                          { k: "⬇ Fehlerquote", v: "−72%" },
                         ].map((x) => (
                           <motion.div
                             key={x.k}
