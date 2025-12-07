@@ -59,7 +59,7 @@ function Donut({ value = 0.92, run = false }: { value?: number; run?: boolean })
   const C = 2 * Math.PI * r
   const dash = C * (1 - value)
   return (
-    <svg width={size} height={size} className="-rotate-90" style={{ willChange: "transform" }}>
+    <svg width={size} height={size} className="-rotate-90">
       <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,.12)" strokeWidth={stroke} fill="none" />
       <motion.circle
         cx={size / 2} cy={size / 2} r={r}
@@ -70,7 +70,6 @@ function Donut({ value = 0.92, run = false }: { value?: number; run?: boolean })
         initial={{ strokeDasharray: C, strokeDashoffset: C }}
         animate={run ? { strokeDasharray: C, strokeDashoffset: dash } : { strokeDasharray: C, strokeDashoffset: C }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: .2 }}
-        style={{ willChange: "stroke-dashoffset" }}
       />
     </svg>
   )
@@ -83,9 +82,9 @@ function Mouse({ controls, visible }: { controls: ReturnType<typeof useAnimation
       className="pointer-events-none absolute z-[999]"
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ opacity: { duration: 0.25 } }}
-      style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+      style={{ willChange: "transform" }}
     >
-      <motion.div animate={controls} style={{ willChange: "transform" }}>
+      <motion.div animate={controls}>
         <div className="h-5 w-5 rounded-full bg-white/95 shadow-[0_0_0_2px_rgba(0,0,0,.25)]" />
       </motion.div>
     </motion.div>
@@ -284,11 +283,7 @@ export default function ShowcaseTypingWaveToDashboard() {
                 initial={{ clipPath: "circle(0% at 78% 22%)" }}
                 animate={reveal ? { clipPath: "circle(140% at 78% 22%)" } : {}}
                 transition={{ duration: REVEAL_DUR, ease: EASE }}
-                style={{
-                  background: "linear-gradient(135deg, rgba(7,17,35,1) 0%, rgba(6,10,24,1) 100%)",
-                  willChange: "clip-path",
-                  transform: "translateZ(0)"
-                }}
+                style={{ background: "linear-gradient(135deg, rgba(7,17,35,1) 0%, rgba(6,10,24,1) 100%)" }}
               >
                 {/* Maus */}
                 <Mouse controls={mouse} visible={mouseOn && tabsVisible && !showPage} />

@@ -1,10 +1,9 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { LazyMotion, MotionConfig, domAnimation, m, useInView } from "framer-motion"
 import { 
   Send, 
-  Calendar, 
   HelpCircle, 
   CheckCircle2, 
   Loader2,
@@ -43,7 +42,9 @@ export function ContactSection() {
   }
 
   return (
-    <section id="kontakt" className="relative py-24 overflow-hidden bg-transparent">
+    <LazyMotion features={domAnimation}>
+      <MotionConfig reducedMotion="user">
+        <section id="kontakt" className="relative py-24 overflow-hidden bg-transparent">
       
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-full pointer-events-none -z-10">
@@ -54,12 +55,12 @@ export function ContactSection() {
       <div className="container mx-auto px-4 max-w-6xl">
         
         {/* 1. HEADLINE & SUBHEADLINE */}
-        <motion.div 
+        <m.div 
           ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
           animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 transform-gpu will-change-transform"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
             Lass uns deinen Prozess <br className="hidden md:block" /> 
@@ -68,17 +69,17 @@ export function ContactSection() {
           <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
             Schreib mir kurz oder buche direkt einen Call – ich beantworte jede Nachricht persönlich.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* 2. MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-24">
           
           {/* LINKS: Kontaktformular (Simple) */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-slate-950/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl h-full flex flex-col"
+            className="bg-slate-950/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl h-full flex flex-col transform-gpu will-change-transform"
           >
             <div className="mb-8">
               <h3 className="text-2xl font-bold text-white mb-2">Nachricht schreiben</h3>
@@ -156,14 +157,14 @@ export function ContactSection() {
                 </p>
               )}
             </form>
-          </motion.div>
+          </m.div>
 
           {/* RECHTS: Calendly / Termin buchen */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col h-full"
+            className="flex flex-col h-full transform-gpu will-change-transform"
           >
             {/* Premium Card Style für Termin */}
             <div className="relative bg-gradient-to-b from-slate-900 to-slate-950 border border-white/10 rounded-2xl p-2 md:p-3 shadow-2xl flex-grow flex flex-col overflow-hidden">
@@ -176,6 +177,7 @@ export function ContactSection() {
                   height="100%"
                   frameBorder="0"
                   title="Calendly Terminbuchung"
+                  loading="lazy"
                   className="min-h-[550px] w-full"
                 ></iframe>
               </div>
@@ -192,7 +194,7 @@ export function ContactSection() {
                  </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* 3. MINI FAQ (Trust Trigger) */}
@@ -231,6 +233,8 @@ export function ContactSection() {
         </div>
 
       </div>
-    </section>
+        </section>
+      </MotionConfig>
+    </LazyMotion>
   )
 }

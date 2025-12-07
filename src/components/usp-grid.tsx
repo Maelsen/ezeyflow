@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useLayoutEffect, useCallback, useMemo } from "react"
+import React, { useState, useRef, useLayoutEffect } from "react"
 import {
   motion,
   AnimatePresence,
@@ -12,10 +12,10 @@ import {
   FileText, Bot, Unplug, Network, Search, LayoutDashboard,
   AlertTriangle, ShieldCheck, FileQuestion, FileCheck2,
   ChevronRight, Activity, Code2, Database, Zap, CheckCircle2,
-  ArrowRight // Neu hinzugefügt für den Button
+  ArrowRight
 } from "lucide-react"
 
-// --- UTIL COMPONENTS (Neu hinzugefügt für den Button) ---
+// --- UTIL COMPONENTS ---
 
 // Helper for conditional classes
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -56,7 +56,6 @@ const Button = ({ children, variant = "primary", size = "default", className, as
   const baseStyle = "inline-flex items-center justify-center rounded-lg font-medium transition-all focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
   const variants = {
-    // Das ist der Style vom mittleren Paket (Gradient)
     primary: "bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_-5px_rgba(139,92,246,0.6)] hover:scale-[1.02] border border-transparent",
     secondary: "bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 backdrop-blur-sm"
   };
@@ -78,7 +77,7 @@ const Button = ({ children, variant = "primary", size = "default", className, as
 };
 
 
-// --- DATEN (Unverändert) ---
+// --- DATEN ---
 const pairs = [
   {
     id: "p1",
@@ -137,7 +136,7 @@ const pairs = [
   },
 ]
 
-// --- ANIMATION COMPONENTS (Unverändert) ---
+// --- ANIMATION COMPONENTS ---
 const ScannerLine = () => (
   <motion.div
     initial={{ top: "0%", opacity: 0 }}
@@ -188,8 +187,8 @@ export function UspGrid() {
     restDelta: 0.001
   });
 
-  // 2. Map Scroll to Index (Optimized with useCallback)
-  const handleScrollChange = useCallback((latest: number) => {
+  // 2. Map Scroll to Index
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (hasCompleted) return
 
     if (latest > 0.99) {
@@ -203,9 +202,7 @@ export function UspGrid() {
       pairs.length - 1
     )
     setActiveIndex(newIndex)
-  }, [hasCompleted])
-
-  useMotionValueEvent(scrollYProgress, "change", handleScrollChange)
+  })
 
   // FIX: Anti-Teleport
   useLayoutEffect(() => {
@@ -215,9 +212,9 @@ export function UspGrid() {
     }
   }, [hasCompleted])
 
-  const handleManualClick = useCallback((index: number) => {
+  const handleManualClick = (index: number) => {
     setActiveIndex(index)
-  }, [])
+  }
 
   return (
     <section
@@ -280,7 +277,7 @@ export function UspGrid() {
             </h2>
           </motion.div>
 
-          {/* PROGRESS BAR (Unter Header) */}
+          {/* PROGRESS BAR */}
           <div className="w-full h-1 bg-slate-900 rounded-full mb-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-slate-800/50" />
             <motion.div
@@ -300,8 +297,21 @@ export function UspGrid() {
                 const isActive = index === activeIndex
                 const isPast = index < activeIndex || (hasCompleted && index !== activeIndex)
 
+                // --- NEW LOGIC: SHOW ONLY UNLOCKED ITEMS ---
+                // Zeige den Punkt nur, wenn:
+                // 1. Die gesamte Animation abgeschlossen ist (hasCompleted)
+                // 2. ODER der User bis zu diesem Punkt gescrollt hat (index <= activeIndex)
+                const isUnlocked = hasCompleted || index <= activeIndex;
+
+                if (!isUnlocked) return null;
+
                 return (
-                  <button
+                  <motion.button
+                    // Animation für das "Reinfahren" neuer Punkte
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    
                     key={pair.id}
                     onClick={() => handleManualClick(index)}
                     className={`group relative w-full text-left rounded-xl transition-all duration-500 border overflow-hidden ${isActive
@@ -360,7 +370,7 @@ export function UspGrid() {
                         className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-blue-600 rounded-l-xl"
                       />
                     )}
-                  </button>
+                  </motion.button>
                 )
               })}
             </div>

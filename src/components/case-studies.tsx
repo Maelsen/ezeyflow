@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, memo } from "react"
+import { useState, useEffect } from "react"
 import {
   motion,
   AnimatePresence,
@@ -975,7 +975,7 @@ function PlaceholderSimulation() {
 }
 
 
-export const CaseStudies = memo(function CaseStudies() {
+export function CaseStudies() {
   const [selected, setSelected] = useState<Project | null>(null)
 
   useEffect(() => {
@@ -1398,4 +1398,4 @@ export const CaseStudies = memo(function CaseStudies() {
       </AnimatePresence>
     </section>
   )
-})
+}

@@ -250,9 +250,7 @@ export function AboutMe() {
                   className="absolute inset-0 left-8 md:left-12 bg-slate-900/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12 overflow-y-auto md:overflow-hidden origin-left shadow-[inset_0_0_40px_rgba(59,130,246,0.1)]"
                   style={{
                     backfaceVisibility: "hidden",
-                    backgroundImage: "linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(59, 130, 246, 0.05) 100%)",
-                    willChange: "transform, opacity",
-                    transform: "translateZ(0)"
+                    backgroundImage: "linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(59, 130, 246, 0.05) 100%)"
                   }}
                 >
                   <motion.div
